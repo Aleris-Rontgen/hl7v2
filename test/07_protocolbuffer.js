@@ -111,11 +111,11 @@ describe('HL7ProtocolBuffer', function() {
     let tests;
     p.on('block', (data) => {
       assert(data instanceof Buffer);
-      assert.strictEqual(data.toString(), VT + 'MSH|^~\\&||||||||||2.7.1' + FS + CR);
+      assert.strictEqual(data.toString(), VT + 'MSH|^~\\&||||||||||2.7.1' + CR + FS);
       if (tests === 0) done();
     });
 
-    const msg = VT + 'MSH|^~\\&||||||||||2.7.1' + FS + CR;
+    const msg = VT + 'MSH|^~\\&||||||||||2.7.1' + CR + FS;
     tests = 3;
     --tests, p.write(msg);
     --tests, p.write(Buffer.from(msg));

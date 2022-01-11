@@ -227,9 +227,17 @@ describe('Parse HL7 message', function() {
     assert.strictEqual(msg.MSH.CharacterSet.value, 'UTF-8');
   });
 
+  it('should parse from ISO 8859-1 encoded Buffer given encoding', function() {
+    const encoding = 'iso-8859-1';
+    let buf = iconv.encode(VT + 'MSH|^~\\\\&|APP|Scandinavian facility åäöÅÄÖæøÆØ||||||||2.5|||||' + CR + FS, encoding);
+    let msg = HL7Message.parse(buf, { encoding });
+    assert(msg.MSH);
+    assert.strictEqual(msg.MSH.SendingFacility.value, 'Scandinavian facility åäöÅÄÖæøÆØ');
+  });
+
   it('should parse from Latin 1 encoded Buffer given encoding', function() {
     const encoding = 'latin1';
-    let buf = iconv.encode(VT + 'MSH|^~\\\\&|APP|Scandinavian facility åäöÅÄÖæøÆØ||||||||2.5|||||' + FS + CR, encoding);
+    let buf = iconv.encode(VT + 'MSH|^~\\\\&|APP|Scandinavian facility åäöÅÄÖæøÆØ||||||||2.5|||||' + CR + FS, encoding);
     let msg = HL7Message.parse(buf, { encoding });
     assert(msg.MSH);
     assert.strictEqual(msg.MSH.SendingFacility.value, 'Scandinavian facility åäöÅÄÖæøÆØ');
