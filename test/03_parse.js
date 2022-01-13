@@ -2,7 +2,6 @@
 const assert = require('assert');
 const iconv = require('iconv-lite');
 const {HL7Message} = require('../');
-const HL7Segment = require('../lib/HL7Segment')
 const {VT, FS, CR} = require('../lib/types');
 
 const sampleMessage1 = `MSH|^~\\&|LCS|LCA|LIS|TEST9999|19980731153200||ORU^R01|3629|P|2.2
