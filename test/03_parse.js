@@ -228,7 +228,7 @@ describe('Parse HL7 message', function() {
 
   it('should parse from ISO 8859-1 encoded Buffer given encoding', function() {
     const encoding = 'iso-8859-1';
-    let buf = iconv.encode(VT + 'MSH|^~\\\\&|APP|Scandinavian facility åäöÅÄÖæøÆØ||||||||2.5|||||' + CR + FS, encoding);
+    let buf = iconv.encode(VT + 'MSH|^~\\\\&|APP|Scandinavian facility åäöÅÄÖæøÆØ||||||||2.5|||||' + FS + CR, encoding);
     let msg = HL7Message.parse(buf, { encoding });
     assert(msg.MSH);
     assert.strictEqual(msg.MSH.SendingFacility.value, 'Scandinavian facility åäöÅÄÖæøÆØ');
@@ -287,7 +287,7 @@ describe('Parse HL7 message', function() {
 
 
   it('should parse custom segments', function() {
-    const messageString = sampleMessage1 + '\rZDS|1.2.345.67.8.9.12341234123412.345|1.2.345.67.8.9.12341234123412.345';
+    const messageString = sampleMessage1 + '\rZDS|1.2.345.67.8.9.12341234123412.345|1.2.345.67.8.9.12341234123412.345\r';
 
     const customDict = {
       segments: {
@@ -324,6 +324,6 @@ describe('Parse HL7 message', function() {
       }
     };
 
-    HL7Message.parse(messageString, { customDict })
+    HL7Message.parse(messageString, {customDict})
   })
 });
